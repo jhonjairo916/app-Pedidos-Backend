@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {service} from '@loopback/core';
 import {
   Count,
@@ -17,6 +18,7 @@ import {PersonaRepository} from '../repositories';
 import {AutenticacionService} from '../services';
 const fetch = require("node-fetch");
 
+@authenticate("admin")
 export class PersonaController {
   constructor(
     @repository(PersonaRepository)
@@ -85,6 +87,7 @@ export class PersonaController {
     return p;
   }
 
+  @authenticate.skip()
   @get('/personas/count')
   @response(200, {
     description: 'Persona model count',
